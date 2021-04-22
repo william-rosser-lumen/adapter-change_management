@@ -190,31 +190,7 @@ healthcheck(callback) {
      * Note how the object was instantiated in the constructor().
      * get() takes a callback function.
      */
-    this.connector.get(function (data, err) {
-        if (err) {
-            callback(null, err);
-        } else {
-            if ('body' in data) {
-                let body = JSON.parse(data.body);
-                let transResults = [];
-                body.result.forEach(ticket => {
-                    let temp = {
-                        change_ticket_number: ticket.number,
-                        active: ticket.active,
-                        priority: ticket.priority,
-                        description: ticket.description,
-                        work_start: ticket.work_start,
-                        work_end: ticket.work_end,
-                        change_ticket_key: ticket.sys_id
-                    };
-                    transResults.push(temp);
-                });
-                callback(transResults,null);
-            } else {
-                callback(data, error);
-            }
-        }
-    });
+    this.connector.get(callback);
   }
 
   /**
@@ -233,28 +209,7 @@ healthcheck(callback) {
      * Note how the object was instantiated in the constructor().
      * post() takes a callback function.
      */
-     this.connector.post(function (data, err) {
-        if (err) {
-            callback(null, err);
-        } else {
-            if ('body' in data) {
-                let body = JSON.parse(data.body);
-                let ticket = body.result;
-                let transResults = {
-                    change_ticket_number: ticket.number,
-                    active: ticket.active,
-                    priority: ticket.priority,
-                    description: ticket.description,
-                    work_start: ticket.work_start,
-                    work_end: ticket.work_end,
-                    change_ticket_key: ticket.sys_id
-                }
-                callback(transResults,null);
-            } else {
-                callback(data, error);
-            }
-        }
-    });
+     this.connector.post(callback);
   }
 }
 
